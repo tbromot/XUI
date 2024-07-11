@@ -10,10 +10,12 @@ extension View {
 
     public func sheet<Model, Content: View>(
         model: Binding<Model?>,
+        onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping (Model) -> Content
     ) -> some View {
-
-        sheet(item: model.objectIdentifiable()) { _ in
+        
+        sheet(item: model.objectIdentifiable(),
+              onDismiss: onDismiss) { _ in
             model.wrappedValue.map(content)
         }
     }
